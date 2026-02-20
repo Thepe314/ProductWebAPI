@@ -1,11 +1,12 @@
 using System;
 
+
 namespace IMS.PRODUCTAPI
 {
     public class Transaction
     {
         //Attributes of a Product
-        public int TransactionId {get; set;}
+        public int Transactionid {get; set;}
         public int ProductId { get; set; }
 
         public string Type { get; set; } = "";
@@ -14,6 +15,11 @@ namespace IMS.PRODUCTAPI
 
         public decimal TotalAmount { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // ? makes it nullable || required is must have value.
+        public Product? Product { get; set; } 
+
+      
 }
 }

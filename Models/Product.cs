@@ -16,5 +16,7 @@ namespace IMS.PRODUCTAPI
         public required decimal Price {get;set;}
 
         public required int Stock {get;set;}
+
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

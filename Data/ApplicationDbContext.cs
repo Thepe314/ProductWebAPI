@@ -6,10 +6,10 @@ namespace IMS.PRODUCTAPI.Data
     {
          public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
-        public DbSet<Product> Products{get;set;}
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         
     }
 
