@@ -94,7 +94,7 @@ namespace IMS.PRODUCTAPI.Controllers
             // calculating fields
             var report = new
             {
-                Month = month,
+                Month = monthName,
                 Year = year,
                 TotalTransactions = transactions.Count(),
                 TotalQuantitySold = transactions.Sum(t => t.Quantity),
