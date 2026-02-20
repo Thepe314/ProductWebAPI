@@ -62,17 +62,17 @@ namespace IMS.PRODUCTAPI.Controllers
         // PUT /api/products/1
         // updates an existing product by id
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Product product)
+        public async Task<IActionResult> Update(int id, ProductDto dto)
         {
             // first I check if the product even exists before trying to update
             var existing = await _productRepo.GetByIdAsync(id);
             if (existing == null) return NotFound("Product not found");
 
             // manually updating each field because I want to control what gets changed
-            existing.Name = product.Name;
-            existing.Description = product.Description;
-            existing.Price = product.Price;
-            existing.Stock = product.Stock;
+            existing.Name = dto.Name;
+            existing.Description = dto.Description;
+            existing.Price = dto.Price;
+            existing.Stock = dto.Stock;
 
             await _productRepo.UpdateAsync(existing);
             return Ok("Product updated successfully");

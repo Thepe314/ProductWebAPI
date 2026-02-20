@@ -1,6 +1,4 @@
 
-
-
 namespace IMS.PRODUCTAPI.Repository
 {
     //This is an interface (Blueprint)

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using IMS.PRODUCTAPI.Repository;
 using IMS.PRODUCTAPI.Repositories;
+using IMS.PRODUCTAPI.Repository;
 
 
 namespace IMS.PRODUCTAPI.Controllers
@@ -19,15 +19,15 @@ namespace IMS.PRODUCTAPI.Controllers
             _productRepo = productRepo;
         }
 
-        // POST /api/transactions/buy
-        // increases stock when we receive products
-        [HttpPost("buy")]
+        // POST /api/transactions/restock
+        // increases stock when we buy products from supplier
+        [HttpPost("restock")]
         public async Task<IActionResult> Buy(int productId, int quantity)
         {
             var product = await _productRepo.GetByIdAsync(productId);
             if (product == null) return NotFound("Product not found");
 
-            // buying = stock goes up
+            // buying/restocking = stock goes up
             product.Stock += quantity;
             await _productRepo.UpdateAsync(product);
 
@@ -46,7 +46,7 @@ namespace IMS.PRODUCTAPI.Controllers
         }
 
         // POST /api/transactions/sell
-        // decreases stock when we sell products
+        // decreases stock when we sell products to customers
         [HttpPost("sell")]
         public async Task<IActionResult> Sell(int productId, int quantity)
         {
@@ -79,6 +79,10 @@ namespace IMS.PRODUCTAPI.Controllers
         [HttpGet("report")]
         public async Task<IActionResult> GetMonthlyReport(int month, int year)
         {
+
+                // I used this to convert the month number to a name for better readability
+             string monthName = new DateTime(year, month, 1).ToString("MMMM");
+
             var transactions = await _transactionRepo.GetByMonthAsync(month, year);
 
             // calculating totals from the SQL results

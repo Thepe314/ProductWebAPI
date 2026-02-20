@@ -5,11 +5,13 @@ namespace IMS.PRODUCTAPI
 {
     public class Transaction
     {
+
+    
         //Attributes of a Product
         public int Transactionid {get; set;}
         public int ProductId { get; set; }
 
-        public string Type { get; set; } = "";
+        public string Type { get; set; } 
 
         public int Quantity { get; set; }
 
