@@ -5,15 +5,16 @@ using IMS.PRODUCTAPI.Models;
 
 namespace IMS.PRODUCTAPI.Controllers
 {
+    // API controller for handling Product
     [ApiController]
-    [Route("api/[controller]")] // this sets the route to /api/products automatically
+    [Route("api/[controller]")] // Base route: /api/products
     public class ProductsController : ControllerBase
     {
-        // I'm injecting the repository here so the controller doesn't 
-        // talk to the database directly - I learned this is called separation of concerns
+        // Repositories for transactions and products
+        // Readonly: only this class can access them
         private readonly IProductRepository _productRepo;
 
-        // constructor injection - .NET automatically passes the repository in here
+        // Constructor: inject repositories via Dependency Injection
         public ProductsController(IProductRepository productRepo)
         {
             _productRepo = productRepo;
@@ -35,8 +36,7 @@ namespace IMS.PRODUCTAPI.Controllers
         {
             var product = await _productRepo.GetByIdAsync(id);
 
-            // I added this check so it returns a proper 404 message
-            // instead of just returning nothing
+           //Returns error of 404 
             if (product == null) return NotFound("Product not found");
 
             return Ok(product);

@@ -2,14 +2,14 @@
 
 namespace IMS.PRODUCTAPI.Repositories
 {
-    // Interface for transaction methods
+    // Interface defining transaction-related repository operations
     public interface ITransactionRepository
     {
-        // Record a buy or sell transaction
+          // Add a transaction record to the database (buy or sell)
         Task AddAsync(Transaction transaction);
 
         // Get all transactions for a specific month and year
-        // This is for your monthly report endpoint
+        // This is for monthly report endpoint
         Task<IEnumerable<Transaction>> GetByMonthAsync(int month, int year);
     }
 }

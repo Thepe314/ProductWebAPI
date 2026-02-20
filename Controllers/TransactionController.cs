@@ -5,14 +5,17 @@ using IMS.PRODUCTAPI.Repository;
 
 namespace IMS.PRODUCTAPI.Controllers
 {
+   // API controller for handling transactions
     [ApiController]
-    [Route("api/[controller]")]
-    public class TransactionsController : ControllerBase
+    [Route("api/[controller]")] // Base route: /api/Transactions
+    public class TransactionsController : ControllerBase // Inherits from ControllerBase to handle API endpoints
     {
-        // I need both repos because buying/selling affects stock AND creates a transaction record
+        // Repositories for transactions and products
+        // Readonly: only this class can access them
         private readonly ITransactionRepository _transactionRepo;
         private readonly IProductRepository _productRepo;
 
+         // Constructor: inject repositories via Dependency Injection
         public TransactionsController(ITransactionRepository transactionRepo, IProductRepository productRepo)
         {
             _transactionRepo = transactionRepo;
@@ -21,17 +24,17 @@ namespace IMS.PRODUCTAPI.Controllers
 
         // POST /api/transactions/restock
         // increases stock when we buy products from supplier
-        [HttpPost("restock")]
+        [HttpPost("restock")] 
         public async Task<IActionResult> Buy(int productId, int quantity)
         {
             var product = await _productRepo.GetByIdAsync(productId);
-            if (product == null) return NotFound("Product not found");
+            if (product == null) return NotFound("Product not found");// Return 404 if product doesn't exist
 
             // buying/restocking = stock goes up
             product.Stock += quantity;
             await _productRepo.UpdateAsync(product);
 
-            // record this buy transaction in the database
+             // Record the purchase as a transaction
             var transaction = new Transaction
             {
                 ProductId = productId,
@@ -47,11 +50,11 @@ namespace IMS.PRODUCTAPI.Controllers
 
         // POST /api/transactions/sell
         // decreases stock when we sell products to customers
-        [HttpPost("sell")]
-        public async Task<IActionResult> Sell(int productId, int quantity)
+        [HttpPost("sell")] 
+        public async Task<IActionResult> Sell(int productId, int quantity) 
         {
             var product = await _productRepo.GetByIdAsync(productId);
-            if (product == null) return NotFound("Product not found");
+            if (product == null) return NotFound("Product not found"); // Return 404 if product doesn't exist
 
             // I added this so you cant sell more than what you have
             if (product.Stock < quantity)
@@ -61,6 +64,7 @@ namespace IMS.PRODUCTAPI.Controllers
             product.Stock -= quantity;
             await _productRepo.UpdateAsync(product);
 
+            // Record the sale as a transaction
             var transaction = new Transaction
             {
                 ProductId = productId,
@@ -76,16 +80,18 @@ namespace IMS.PRODUCTAPI.Controllers
 
         // GET /api/transactions/report?month=2&year=2026
         // monthly report - uses raw SQL query in the repository
-        [HttpGet("report")]
+        [HttpGet("report")] 
         public async Task<IActionResult> GetMonthlyReport(int month, int year)
         {
 
-                // I used this to convert the month number to a name for better readability
+            // I used this to convert the month number to a name for better readability
+            //Basically by converting number to month name, it is easier to see rather than a number
              string monthName = new DateTime(year, month, 1).ToString("MMMM");
 
+             // Get transactions for the given month and year
             var transactions = await _transactionRepo.GetByMonthAsync(month, year);
 
-            // calculating totals from the SQL results
+            // calculating fields
             var report = new
             {
                 Month = month,

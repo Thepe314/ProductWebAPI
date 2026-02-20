@@ -1,8 +1,8 @@
 
 namespace IMS.PRODUCTAPI.Repository
 {
-    //This is an interface (Blueprint)
-    //Declares that methods exist and it doesnt write actual code 
+    //Interface defining CRUD operations for products 
+    //Acts as a blueprint for the repository implementation.
     //Actual code is written on ProductRepo.cs
 
     public interface IProductRepository
@@ -25,3 +25,4 @@ namespace IMS.PRODUCTAPI.Repository
         
     }
 }
+

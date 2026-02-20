@@ -2,21 +2,34 @@ using System;
 
 namespace IMS.PRODUCTAPI
 {
+
+      // Represents a product in the inventory
     public class Product
     {
         //Attributes of a Product
-        public int ProductId {get; set;}
 
-        //required to it so that you need to input these values
-        public required string Name {get;set;}
+        //Primary key of product
+        public int ProductId {get; set;}    
 
-        //make nullable property meaning that you can set it as empty
-        public string? Description {get;set;}
+        // the name of the product
+        // 'required' ensures a value must be provided when creating a Product
+        public required string Name {get;set;} 
 
-        public required decimal Price {get;set;}
+        // Description of the product
+        // Nullable property (can be left empty)
+        public string? Description {get;set;} 
 
-        public required int Stock {get;set;}
+        // Price of a single unit of the product
+        // Required value
+        public required decimal Price {get;set;} 
 
-        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+        // Current stock of the product
+        // Required value
+        public required int Stock {get;set;} 
+
+        // list of transactions associated with this product
+        // Initialized with an empty list to avoid null references
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>(); 
+
     }
 }
