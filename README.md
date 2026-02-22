@@ -31,14 +31,20 @@ https://github.com/Thepe314/ProductWebAPI.git
 ## Api Endpoints
 ### Products
 -GET /api/Products  -> Get a list of products
+
 -POST /api/Products -> Create a new product
+
 -GET /api/Products/ {id} ->Find a product with id
+
 -PUT /api/products/ {id} ->Change values of product with id
+
 -DELETE /api/products/{id} ->Delete an existing product
 
 ### Transactions
 -POST /api/Transactions/restock ->Add stock to existing product (Seller restocking product)
+
 -POST /api/Transactions/sell -> Decrease stock from exisitng product (Customer buys a product)
+
 -GET /api/Transactions/report -> Get totalTransactions, TotalQuantity, Total Revenue from a month, in this case 2 where it is februray)
 
 
