@@ -21,9 +21,10 @@ namespace IMS.PRODUCTAPI.Repositories
         {
             // [Transaction] is enclosed in brackets because "Transaction" is a SQL keyword
             // Use ExecuteSqlRawAsync to perform raw SQL insert
+            //Inserting into the columns of table
             await _context.Database.ExecuteSqlRawAsync(
                 "INSERT INTO [Transaction](ProductId, Type, Quantity, TotalAmount, CreatedAt) VALUES ({0}, {1}, {2}, {3}, {4})",
-                transaction.ProductId,
+                transaction.ProductId, 
                 transaction.Type,
                 transaction.Quantity,
                 transaction.TotalAmount,
